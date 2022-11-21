@@ -12,7 +12,11 @@ class Authcontroller extends Controller
 {
  public function index()
  {
+   if (auth()->user()) {
+      return redirect('/');
+   }
     return view('pages.auth.login');
+  
  }    
 
  public function login(Request $request){
@@ -23,7 +27,7 @@ $request->validate([
 ]);
 
    if(Auth::attempt($request->only('email','password'))){
-      return redirect('home');
+      return redirect('/');
         }
 
         return redirect('login')->withError('Login details are not valid');
@@ -31,7 +35,7 @@ $request->validate([
     }
  public function register_view()
  {
-    return view('register');
+    return view('pages.auth.register');
  }
  public function register(Request $request){
     $request->validate([
@@ -46,8 +50,8 @@ $request->validate([
         'password'=> Hash::make($request->password)
     ]);
 
-    if(Auth::attempt($request->only('name','password'))){
-        return redirect('home');
+    if(Auth::attempt($request->only('name','email','password'))){
+        return redirect('/');
         }
         return redirect('register')->withError('Error');
     
@@ -59,7 +63,7 @@ $request->validate([
     
    Session::flush();
     Auth::logout();
-    return redirect('');
+    return redirect('login');
  }
 
 }

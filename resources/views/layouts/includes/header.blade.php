@@ -132,6 +132,11 @@
           <i class="fas fa-th-large"></i>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link"   href="{{ url('logout') }}" role="button">
+          <i class="fa fa-power-off fa-rotate-180 " ></i>
+        </a>
+      </li>
     </ul>
   </nav>
   <!-- /.navbar -->

@@ -4,23 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class Authcontroller extends Controller
 {
  public function index()
  {
-    return view('login');
+    return view('pages.auth.login');
  }    
 
  public function login(Request $request){
 
 $request->validate([
-'name' => 'required',
+'email' => 'required',
 'password'=> 'required'
 ]);
 
-   if(\Auth::attempt($request->only('name','password'))){
-            return redirect('home');
+   if(Auth::attempt($request->only('email','password'))){
+      return redirect('home');
         }
 
         return redirect('login')->withError('Login details are not valid');
@@ -40,10 +43,10 @@ $request->validate([
     user::create([
         'name'=> $request->name,
         'email'=> $request->email,
-        'password'=> \Hash::make($request->password)
+        'password'=> Hash::make($request->password)
     ]);
 
-    if(\Auth::attempt($request->only('name','password'))){
+    if(Auth::attempt($request->only('name','password'))){
         return redirect('home');
         }
         return redirect('register')->withError('Error');
@@ -53,8 +56,9 @@ $request->validate([
     return view ('home');
  }
  public function logout(){
-    \Session::flush();
-    \Auth::logout();
+    
+   Session::flush();
+    Auth::logout();
     return redirect('');
  }
 

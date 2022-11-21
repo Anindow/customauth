@@ -76,12 +76,11 @@ span.psw {
   }
 }
 </style>
- 
+
 </head>
 <body>
 <form action="{{ route('login') }}" method="post">
                             @csrf
-                            @method('post')
   
 
   <div class="container">

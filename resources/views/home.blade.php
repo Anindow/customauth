@@ -7,8 +7,10 @@
 
 <body>
   <h1>Hi</h1>
+@auth
 
-  <h2>{{ Auth::user()->name }} </h2>
+<h2>{{ Auth::user()->name }} </h2>
+@endauth
 <br>
 <br>
 <h6>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet maiores quisquam fugit corporis, similique unde natus. Facere odio fugit sint harum debitis consequatur laudantium neque eveniet autem quibusdam consectetur corporis voluptas vitae deserunt cumque, provident nemo dignissimos accusantium officiis rem dolorum? Laboriosam debitis quis inventore aspernatur eveniet modi beatae mollitia ipsum, quasi ducimus consequuntur, iure nostrum laudantium asperiores sapiente velit omnis earum. Vel, saepe ullam beatae cupiditate ducimus temporibus tenetur cum inventore, quibusdam quia voluptate animi sed expedita tempore repudiandae quaerat non. Perferendis, eos beatae quaerat, dignissimos, porro eligendi sint labore quia illum non vel earum dolorum voluptatum velit inventore.

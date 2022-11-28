@@ -206,7 +206,7 @@
 
     <!-- Main row -->
     <div class="row">
-      
+
 
       <div class="col-md-4">
         <!-- Info Boxes Style 2 -->
@@ -414,7 +414,5 @@
 
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
-<!-- Control sidebar content goes here -->
 </aside>
-<!-- /.control-sidebar -->
 @endsection

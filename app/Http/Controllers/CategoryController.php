@@ -31,20 +31,18 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-//        dd($request->all());
         $request->validate([
-
-            'name' => 'requird'
+            'name' => 'required'
         ]);
-        dd('assd');
-//        $this->validate($request, [
-//            'name' => 'requird'
-//        ]);
+        $data = $request->except('_token');
+        $data['status'] = $request->status ?? 0;
+        Category::create($data);
+        return redirect()->back()->with(["message" => "Created successfully"]);
     }
 
     /**
@@ -72,23 +70,30 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Category $category
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+        $data = $request->except('_token', '_method');
+        $data['status'] = $request->status ?? 0;
+        $category->update($data);
+        return redirect()->back()->with(["message" => "Update successfully"]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->back()->with(["message" => "Deleted successfully"]);
     }
 }

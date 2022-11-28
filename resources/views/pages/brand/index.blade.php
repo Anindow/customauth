@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Manage Category </h1>
+                    <h1 class="m-0">Manage Brands </h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ ('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Category</li>
+                        <li class="breadcrumb-item active">Brand</li>
                     </ol>
                 </div>
             </div>
@@ -23,8 +23,8 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">All Categories</h3>
-                            <button type="button" data-toggle="modal" data-target="#createCategoryModal"
+                            <h3 class="card-title">All Brand</h3>
+                            <button type="button" data-toggle="modal" data-target="#createBrandModal"
                                     class="btn btn-info float-right btn-sm">
                                 <i class="fa fa-plus"></i> Add New
                             </button>
@@ -42,15 +42,15 @@
                                 </thead>
                                 <tbody>
                                 @php($i = 1)
-                                @foreach($categories as $category)
+                                @foreach($brands as $brand)
                                     <tr>
                                         <td>{{$i++}}</td>
-                                        <td>{{$category->name}}</td>
-                                        <td>{{$category->description}}</td>
+                                        <td>{{$brand->name}}</td>
+                                        <td>{{$brand->description}}</td>
 
                                         <td>
                                             <a href="javascript:void(0)" title="Change status">
-                                                @if($category->status == 1)
+                                                @if($brand->status == 1)
                                                     <span class="badge badge-success">Active</span>
                                                 @else
                                                     <span class="badge badge-danger">Inactive</span>
@@ -58,14 +58,14 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <button onclick="openShowCategoryModal('ginger-ward')" type="button"
+                                            <button onclick="openShowBrandModal('ginger-ward')" type="button"
                                                     class="btn btn-sm btn-primary" title="View"><i
                                                     class="fa fa-search-plus"></i></button>
-                                            <button onclick="openEditCategoryModal('{{$category->id}}')" type="button"
+                                            <button onclick="openEditBrandModal('{{$brand->id}}')" type="button"
                                                     class="btn btn-sm btn-success" title="Edit"><i
                                                     class="fa fa-edit"></i></button>
 
-                                            <form method="POST" action="{{route('categories.destroy', $category->id)}}"
+                                            <form method="POST" action="{{route('brands.destroy', $brand->id)}}"
                                                   class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
@@ -90,19 +90,20 @@
 
         </div>
 
-{{--        All Modals    --}}
-        <div class="modal fade" id="createCategoryModal" tabindex="-1" aria-labelledby="createCategoryModalLabel"
+        {{--                All Modals--}}
+
+        <div class="modal fade" id="createBrandModal" tabindex="-1" aria-labelledby="createBrandModalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="createCategoryModalLabel">Create Category</h5>
+                        <h5 class="modal-title" id="createBrandModalLabel">Create Brand</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{route('categories.store')}}" method="POST" class="form-horizontal"
-                          id="categoryCreateForm">
+                    <form action="{{route('brands.store')}}" method="POST" class="form-horizontal"
+                          id="brandCreateForm">
                         @csrf
                         <div class="modal-body">
                             <div class="form-group row no-gutters">
@@ -110,7 +111,7 @@
                                 <div class="col-sm-9">
                                     <input type="text" name="name" required
                                            class="form-control @error('name') is-invalid @enderror "
-                                           value="{{old('name')}}" id="name" placeholder="Enter category name">
+                                           value="{{old('name')}}" id="name" placeholder="Enter Brand name">
                                     @error('name')<span class="text-danger">{{$errors->first('name')}}</span>@enderror
 
                                 </div>
@@ -141,18 +142,18 @@
             </div>
         </div>
 
-{{--        Edit modal--}}
-        <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel"
+{{--                Edit modal--}}
+        <div class="modal fade" id="editBrandModal" tabindex="-1" aria-labelledby="editBrandModalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
+                        <h5 class="modal-title" id="editBrandModalLabel">Edit Brand</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form method="POST" class="form-horizontal" id="categoryEditForm">
+                    <form method="POST" class="form-horizontal" id="brandEditForm">
                         @csrf
                         @method('PUT')
                         <div class="modal-body">
@@ -161,7 +162,7 @@
                                 <div class="col-sm-9">
                                     <input type="text" name="name" required
                                            class="form-control @error('name') is-invalid @enderror "
-                                           value="{{old('name')}}" id="editCategoryName" placeholder="Enter category name">
+                                           value="{{old('name')}}" id="editBrandName" placeholder="Enter Brand name">
                                     @error('name')<span class="text-danger">{{$errors->first('name')}}</span>@enderror
 
                                 </div>
@@ -169,14 +170,14 @@
                             <div class="form-group row no-gutters">
                                 <label for="description" class="col-sm-3 col-form-label">Description</label>
                                 <div class="col-sm-9">
-                                <textarea name="description" id="editCategoryDescription" class="form-control"
+                                <textarea name="description" id="editBrandDescription" class="form-control"
                                           placeholder="Enter description (optional)"></textarea>
                                 </div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <label for="status" class="col-sm-3 col-form-label">Status</label>
                                 <div class="col-sm-9">
-                                    <input type="checkbox" id="editCategoryStatus" name="status" data-bootstrap-switch
+                                    <input type="checkbox" id="editBrandStatus" name="status" data-bootstrap-switch
                                            data-off-color="danger" data-on-color="info" value="1">
                                 </div>
                             </div>
@@ -199,27 +200,27 @@
     <script>
         let app_url = '{{url('/')}}'
         // all categories in json format.
-        let categories = @json($categories);
+        let brands = @json($brands);
 
         // $(document).ready(function () {
         //
         // });
 
 
-        function openEditCategoryModal(id){
-            let category = categories.find(category => category.id == id);
+        function openEditBrandModal(id){
+            let brand = brands.find(brand => brand.id == id);
 
             // Set edit form action url
-            $('#categoryEditForm').attr('action', app_url + '/categories/' + category.id); // id
+            $('#brandEditForm').attr('action', app_url + '/brands/' + brand.id); // id
 
             // Set update row value
-            $('#editCategoryName').val(category.name);
-            $('#editCategoryDescription').val(category.description);
-            category.status == 1 ? $('#editCategoryStatus').prop('checked', true) : $('#editCategoryStatus').prop('checked', false);
+            $('#editBrandName').val(brand.name);
+            $('#editBrandDescription').val(brand.description);
+            brand.status == 1 ? $('#editBrandStatus').prop('checked', true) : $('#editBrandStatus').prop('checked', false);
 
             // Open modal
-            $('#editCategoryModal').modal('show');
-            // console.log(category)
+            $('#editBrandModal').modal('show');
+
         }
     </script>
 @endpush
